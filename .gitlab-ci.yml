@@ -1,0 +1,11 @@
+# .gitlab-ci.yml
+# Inherits the full shared template from @zairakai/js-dev-tools.
+
+include:
+  - project: "zairakai/npm-packages/js-dev-tools"
+    ref: v1.0.0
+    file: ".gitlab/ci/pipeline-js-package.yml"
+
+variables:
+  CACHE_KEY: "js-i18n-v1"
+  NPM_PACKAGE_NAME: "@zairakai/js-i18n"

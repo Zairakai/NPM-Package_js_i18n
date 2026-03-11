@@ -1,0 +1,96 @@
+{
+  "name": "@zairakai/js-i18n",
+  "version": "0.0.0",
+  "description": "Lightweight internationalization library with Laravel-style translation, pluralization, dot-notation keys, and multi-locale support",
+  "keywords": [
+    "i18n",
+    "internationalization",
+    "localization",
+    "pluralization",
+    "translations",
+    "laravel-like",
+    "fluent",
+    "typescript"
+  ],
+  "homepage": "https://gitlab.com/zairakai/npm-packages/js-i18n",
+  "bugs": {
+    "url": "https://gitlab.com/zairakai/npm-packages/js-i18n/-/issues",
+    "email": "contact-project+zairakai-npm-packages-js-i18n-80190292-issue-@incoming.gitlab.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/zairakai/npm-packages/js-i18n.git"
+  },
+  "funding": [
+    {
+      "type": "patreon",
+      "url": "https://www.patreon.com/c/zairakai"
+    },
+    {
+      "type": "twitch",
+      "url": "https://www.twitch.tv/zairakai"
+    }
+  ],
+  "license": "MIT",
+  "author": "Stanislas Poisson <stanislas.p@the-white-rabbits.fr> (https://the-white-rabbits.fr)",
+  "contributors": [
+    {
+      "name": "Stanislas Poisson",
+      "url": "https://gitlab.com/zairakai",
+      "role": "Maintainer"
+    }
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "bash node_modules/@zairakai/js-dev-tools/scripts/build.sh",
+    "eslint": "bash node_modules/@zairakai/js-dev-tools/scripts/eslint.sh",
+    "eslint:fix": "bash node_modules/@zairakai/js-dev-tools/scripts/eslint-fix.sh",
+    "markdownlint": "bash node_modules/@zairakai/js-dev-tools/scripts/markdownlint.sh",
+    "markdownlint:fix": "bash node_modules/@zairakai/js-dev-tools/scripts/markdownlint-fix.sh",
+    "normalize": "make package-normalize",
+    "package:validate": "make package-validate",
+    "postinstall": "bash node_modules/@zairakai/js-dev-tools/scripts/setup-project.sh --silent || true",
+    "prettier": "bash node_modules/@zairakai/js-dev-tools/scripts/prettier.sh",
+    "prettier:fix": "bash node_modules/@zairakai/js-dev-tools/scripts/prettier-fix.sh",
+    "setup": "bash node_modules/@zairakai/js-dev-tools/scripts/setup-project.sh",
+    "stylelint": "bash node_modules/@zairakai/js-dev-tools/scripts/stylelint.sh",
+    "stylelint:fix": "bash node_modules/@zairakai/js-dev-tools/scripts/stylelint-fix.sh",
+    "test": "make test-all",
+    "validate": "make quality"
+  },
+  "dependencies": {
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.0",
+    "@vitest/coverage-v8": "^4.0.0",
+    "@zairakai/js-dev-tools": "^1.0.0",
+    "knip": "^5.86.0",
+    "sort-package-json": "^3.6.1",
+    "tsup": "^8.0.0",
+    "typedoc": "^0.28.0",
+    "typescript": "^5.7.2",
+    "vitest": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

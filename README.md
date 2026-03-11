@@ -1,93 +1,228 @@
-# JS I18N
+# @zairakai/js-i18n
 
+[![Main][pipeline-main-badge]][pipeline-main-link]
+[![Develop][pipeline-develop-badge]][pipeline-develop-link]
+[![Coverage][coverage-badge]][coverage-link]
 
+[![npm][npm-badge]][npm-link]
+[![GitLab Release][gitlab-release-badge]][gitlab-release]
+[![License][license-badge]][license]
 
-## Getting started
+[![Node.js][node-badge]][node]
+[![ESLint][eslint-badge]][eslint]
+[![Prettier][prettier-badge]][prettier]
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+Lightweight internationalization library with Laravel-style translation, pluralization, dot-notation keys, and multi-locale support.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+---
 
-## Add your files
+## Features
 
-* [Create](https://docs.gitlab.com/user/project/repository/web_editor/#create-a-file) or [upload](https://docs.gitlab.com/user/project/repository/web_editor/#upload-a-file) files
-* [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+- **Laravel-style `__()`** — familiar `:attribute` replacement and `{0} | {1} | [2,*] :count` pluralization
+- **Dot notation keys** — navigate nested translation objects with `auth.login.title`
+- **Multi-locale** — manage any number of locales, switch at runtime
+- **Runtime validation** — translation data validated at runtime, invalid structures throw with a descriptive error message
+- **Type-safe** — full TypeScript types for IDE support and static analysis
 
+---
+
+## Install
+
+```bash
+npm install @zairakai/js-i18n
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/zairakai/npm-packages/js-i18n.git
-git branch -M main
-git push -uf origin main
-```
 
-## Integrate with your tools
-
-* [Set up project integrations](https://gitlab.com/zairakai/npm-packages/js-i18n/-/settings/integrations)
-
-## Collaborate with your team
-
-* [Invite team members and collaborators](https://docs.gitlab.com/user/project/members/)
-* [Create a new merge request](https://docs.gitlab.com/user/project/merge_requests/creating_merge_requests/)
-* [Automatically close issues from merge requests](https://docs.gitlab.com/user/project/issues/managing_issues/#closing-issues-automatically)
-* [Enable merge request approvals](https://docs.gitlab.com/user/project/merge_requests/approvals/)
-* [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-* [Get started with GitLab CI/CD](https://docs.gitlab.com/ci/quick_start/)
-* [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/user/application_security/sast/)
-* [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/topics/autodevops/requirements/)
-* [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/user/clusters/agent/)
-* [Set up protected environments](https://docs.gitlab.com/ci/environments/protected_environments/)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+---
 
 ## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+### Basic translation
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+```typescript
+import { createI18n } from '@zairakai/js-i18n'
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+const i18n = createI18n(
+  {
+    en: {
+      welcome: 'Welcome, :name!',
+      auth: {
+        login: 'Sign in',
+        logout: 'Sign out',
+      },
+    },
+    fr: {
+      welcome: 'Bienvenue, :name !',
+      auth: {
+        login: 'Se connecter',
+        logout: 'Se déconnecter',
+      },
+    },
+  },
+  'en'
+)
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+i18n.__('welcome', { name: 'Stan' }) // "Welcome, Stan!"
+i18n.__('auth.login')               // "Sign in"
+```
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+### Pluralization
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+```typescript
+import { createI18n } from '@zairakai/js-i18n'
 
-## License
-For open source projects, say how it is licensed.
+const i18n = createI18n({
+  en: {
+    apples: '{0} No apples|{1} One apple|[2,*] :count apples',
+    files: '[0,1] :count file|[2,*] :count files',
+  },
+})
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+i18n.__('apples', 0) // "No apples"
+i18n.__('apples', 1) // "One apple"
+i18n.__('apples', 5) // "5 apples"
+```
+
+### Count + replacements (case 3)
+
+```typescript
+i18n.__('files', 3, { extra: 'info' }) // "3 files"
+```
+
+### Managing locales at runtime
+
+```typescript
+i18n.setLocale('fr')
+i18n.getLocale()              // "fr"
+i18n.getAvailableLocales()    // ["en", "fr"]
+
+i18n.setTranslations('de', { welcome: 'Willkommen, :name!' })
+i18n.addTranslations('de', { auth: { login: 'Anmelden' } })
+
+i18n.hasTranslation('auth.login', 'de') // true
+i18n.hasTranslation('auth.logout', 'de') // false
+```
+
+### Error handling
+
+Translation data is validated at runtime. Invalid structures (e.g. loading from an API or external JSON) throw an `Error` with a descriptive message indicating exactly what is wrong.
+
+```typescript
+import { createI18n } from '@zairakai/js-i18n'
+
+try {
+  const data = await fetchTranslations() // unknown external data
+  const i18n = createI18n(data, 'en')
+} catch (e) {
+  // e.message describes the invalid field and its path
+  console.error('Invalid translation data:', (e as Error).message)
+}
+```
+
+The same applies to `setTranslations()`, `addTranslations()`, and `translate()` when replacements are malformed.
+
+---
+
+## Pluralization syntax
+
+The pluralization format follows Laravel's `trans_choice` pattern exactly.
+
+| Pattern         | Matches                      | Example                              |
+| --------------- | ---------------------------- | ------------------------------------ |
+| `{0}`           | Exactly 0                    | `{0} No items`                       |
+| `{1}`           | Exactly 1                    | `{1} One item`                       |
+| `{n}`           | Exactly n                    | `{5} Exactly five`                   |
+| `[2,*]`         | 2 and above                  | `[2,*] :count items`                 |
+| `[0,1]`         | 0 or 1                       | `[0,1] :count file`                  |
+| `[1,10]`        | Between 1 and 10 (inclusive) | `[1,10] a few items`                 |
+
+Forms are separated by `|`. The `:count` placeholder is automatically replaced by the count value.
+
+```typescript
+// Full example
+'{0} No apples|{1} One apple|[2,*] :count apples'
+```
+
+---
+
+## API Reference
+
+### Factory functions
+
+| Function | Description |
+| --- | --- |
+| `createI18n(translations?, locale?)` | Creates a translator instance (alias, preferred). |
+| `createTranslator(translations?, locale?)` | Creates a translator instance (explicit name). |
+
+Both return a `Translator` instance. Default locale is `'en'`.
+
+### Translator methods
+
+| Method                                  | Description                                             |
+| --------------------------------------- | ------------------------------------------------------- |
+| `__(path, replacements?)`               | Translate a key with optional replacements.             |
+| `__(path, count, replacements?)`        | Translate with pluralization count.                     |
+| `translate(path, replacements?)`        | Alias for `__`.                                         |
+| `translate(path, count, replacements?)` | Alias for `__` with count.                              |
+| `setLocale(locale)`                     | Set the active locale.                                  |
+| `getLocale()`                           | Get the active locale.                                  |
+| `setTranslations(locale, translations)` | Replace all translations for a locale.                  |
+| `addTranslations(locale, translations)` | Merge translations into an existing locale.             |
+| `hasTranslation(path, locale?)`         | Check if a translation key exists (uses active locale). |
+| `getAvailableLocales()`                 | Return all registered locale codes.                     |
+
+### Pluralization utilities
+
+| Function                           | Description                                     |
+| ---------------------------------- | ----------------------------------------------- |
+| `applyPluralization(value, count)` | Apply pluralization to a raw string with count. |
+| `selectPluralForm(forms, count)`   | Select the correct form from a pre-split array. |
+
+---
+
+## Development
+
+```bash
+npm install          # install dependencies
+make quality         # full quality gate (lint, format, typecheck, tests)
+make test            # run vitest
+make test-coverage   # run vitest with coverage
+make ci              # run CI validation locally
+```
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for the full development workflow.
+
+---
+
+## Getting Help
+
+[![License][license-badge]][license]
+[![Security Policy][security-badge]][security]
+[![Issues][issues-badge]][issues]
+
+**Made with ❤️ by [Zairakai][ecosystem]**
+
+<!-- Reference Links -->
+
+[pipeline-main-badge]: https://gitlab.com/zairakai/npm-packages/js-i18n/badges/main/pipeline.svg?ignore_skipped=true&key_text=Main
+[pipeline-main-link]: https://gitlab.com/zairakai/npm-packages/js-i18n/-/commits/main
+[pipeline-develop-badge]: https://gitlab.com/zairakai/npm-packages/js-i18n/badges/develop/pipeline.svg?ignore_skipped=true&key_text=Develop
+[pipeline-develop-link]: https://gitlab.com/zairakai/npm-packages/js-i18n/-/commits/develop
+[npm-badge]: https://img.shields.io/npm/v/@zairakai/js-i18n
+[npm-link]: https://www.npmjs.com/package/@zairakai/js-i18n
+[gitlab-release-badge]: https://img.shields.io/gitlab/v/release/zairakai/npm-packages/js-i18n?logo=gitlab
+[gitlab-release]: https://gitlab.com/zairakai/npm-packages/js-i18n/-/releases
+[coverage-badge]: https://gitlab.com/zairakai/npm-packages/js-i18n/badges/main/coverage.svg
+[coverage-link]: https://gitlab.com/zairakai/npm-packages/js-i18n/-/pipelines?ref=main
+[license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
+[license]: ./LICENSE
+[security-badge]: https://img.shields.io/badge/security-scanned-green.svg
+[security]: ./SECURITY.md
+[issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fnpm-packages%2Fi18n?logo=gitlab&label=Issues
+[issues]: https://gitlab.com/zairakai/npm-packages/js-i18n/-/issues
+[node-badge]: https://img.shields.io/badge/node.js-%3E%3D22-green.svg?logo=node.js
+[node]: https://nodejs.org
+[eslint-badge]: https://img.shields.io/badge/code%20style-eslint-4B32C3.svg?logo=eslint
+[eslint]: https://eslint.org
+[prettier-badge]: https://img.shields.io/badge/formatter-prettier-F7B93E.svg?logo=prettier
+[prettier]: https://prettier.io
+[ecosystem]: https://gitlab.com/zairakai
