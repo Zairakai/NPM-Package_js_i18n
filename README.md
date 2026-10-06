@@ -14,6 +14,8 @@
 
 Lightweight internationalization library with Laravel-style translation, pluralization, dot-notation keys, and multi-locale support.
 
+**Documentation: <https://js-i18n-8f9736.gitlab.io>**
+
 ---
 
 ## Features
@@ -225,7 +227,7 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for the full development workflow.
 [security]: ./SECURITY.md
 [issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fnpm-packages%2Fi18n?logo=gitlab&label=Issues
 [issues]: https://gitlab.com/zairakai/npm-packages/js-i18n/-/issues
-[node-badge]: https://img.shields.io/badge/node.js-%3E%3D22-green.svg?logo=node.js
+[node-badge]: https://img.shields.io/badge/node.js-%3E%3D24-green.svg?logo=node.js
 [node]: https://nodejs.org
 [eslint-badge]: https://img.shields.io/badge/code%20style-eslint-4B32C3.svg?logo=eslint
 [eslint]: https://eslint.org
