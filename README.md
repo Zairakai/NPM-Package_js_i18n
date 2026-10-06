@@ -5,6 +5,7 @@
 [![Coverage][coverage-badge]][coverage-link]
 
 [![npm][npm-badge]][npm-link]
+[![Docs][docs-badge]][docs]
 [![GitLab Release][gitlab-release-badge]][gitlab-release]
 [![License][license-badge]][license]
 
@@ -13,6 +14,8 @@
 [![Prettier][prettier-badge]][prettier]
 
 Lightweight internationalization library with Laravel-style translation, pluralization, dot-notation keys, and multi-locale support.
+
+**Documentation: [js-i18n-8f9736.gitlab.io][docs]**
 
 ---
 
@@ -23,6 +26,12 @@ Lightweight internationalization library with Laravel-style translation, plurali
 - **Multi-locale** — manage any number of locales, switch at runtime
 - **Runtime validation** — translation data validated at runtime, invalid structures throw with a descriptive error message
 - **Type-safe** — full TypeScript types for IDE support and static analysis
+
+---
+
+## Documentation
+
+The documentation site has this guide and the reference of the API generated from the source with TypeDoc, for every released version (selector at the top right, `next` is `main`). Build it with `cd docs && npm ci && npm run dev`. It is published with GitLab Pages from `main`.
 
 ---
 
@@ -219,10 +228,12 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for the full development workflow.
 [security]: ./SECURITY.md
 [issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fnpm-packages%2Fi18n?logo=gitlab&label=Issues
 [issues]: https://gitlab.com/zairakai/npm-packages/js-i18n/-/issues
-[node-badge]: https://img.shields.io/badge/node.js-%3E%3D22-green.svg?logo=node.js
+[node-badge]: https://img.shields.io/badge/node.js-%3E%3D24-green.svg?logo=node.js
 [node]: https://nodejs.org
 [eslint-badge]: https://img.shields.io/badge/code%20style-eslint-4B32C3.svg?logo=eslint
 [eslint]: https://eslint.org
 [prettier-badge]: https://img.shields.io/badge/formatter-prettier-F7B93E.svg?logo=prettier
 [prettier]: https://prettier.io
 [ecosystem]: https://gitlab.com/zairakai
+[docs]: https://js-i18n-8f9736.gitlab.io
+[docs-badge]: https://img.shields.io/badge/docs-online-blue
