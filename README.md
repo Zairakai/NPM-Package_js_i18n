@@ -5,6 +5,7 @@
 [![Coverage][coverage-badge]][coverage-link]
 
 [![npm][npm-badge]][npm-link]
+[![Docs][docs-badge]][docs]
 [![GitLab Release][gitlab-release-badge]][gitlab-release]
 [![License][license-badge]][license]
 
@@ -14,7 +15,7 @@
 
 Lightweight internationalization library with Laravel-style translation, pluralization, dot-notation keys, and multi-locale support.
 
-**Documentation: <https://js-i18n-8f9736.gitlab.io>**
+**Documentation: [js-i18n-8f9736.gitlab.io][docs]**
 
 ---
 
@@ -234,3 +235,5 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for the full development workflow.
 [prettier-badge]: https://img.shields.io/badge/formatter-prettier-F7B93E.svg?logo=prettier
 [prettier]: https://prettier.io
 [ecosystem]: https://gitlab.com/zairakai
+[docs]: https://js-i18n-8f9736.gitlab.io
+[docs-badge]: https://img.shields.io/badge/docs-online-blue
