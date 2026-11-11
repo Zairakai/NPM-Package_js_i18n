@@ -1,4 +1,8 @@
-# @zairakai/js-i18n
+# JS i18n
+
+![JS i18n](https://gitlab.com/zairakai/npm-packages/js-i18n/-/raw/main/assets/banner.png)
+
+`@zairakai/js-i18n`
 
 [![Main][pipeline-main-badge]][pipeline-main-link]
 [![Develop][pipeline-develop-badge]][pipeline-develop-link]
@@ -12,8 +16,10 @@
 [![Node.js][node-badge]][node]
 [![ESLint][eslint-badge]][eslint]
 [![Prettier][prettier-badge]][prettier]
+[![Vitest][vitest-badge]][vitest]
+[![Knip][knip-badge]][knip]
 
-Lightweight internationalization library with Laravel-style translation, pluralization, dot-notation keys, and multi-locale support.
+Internationalization library for the web with Laravel-style translation, pluralization, dot-notation keys and multi-locale support. Translations are validated at runtime with `zod`.
 
 **Documentation: [js-i18n-8f9736.gitlab.io][docs]**
 
@@ -40,6 +46,12 @@ The documentation site has this guide and the reference of the API generated fro
 ```bash
 npm install @zairakai/js-i18n
 ```
+
+### In the browser
+
+The library is made for the web: ESM and CommonJS builds, no Node.js built-ins, `"sideEffects": false`. A bundler keeps only what you import (the tests of this repository check it with esbuild): a project that imports `applyPluralization` alone gets a few hundred bytes. `createTranslator` validates the translations with `zod`, so it brings `zod` with it.
+
+There is no minimum browser version.
 
 ---
 
@@ -135,14 +147,14 @@ The same applies to `setTranslations()`, `addTranslations()`, and `translate()` 
 
 The pluralization format follows Laravel's `trans_choice` pattern exactly.
 
-| Pattern         | Matches                      | Example                              |
-| --------------- | ---------------------------- | ------------------------------------ |
-| `{0}`           | Exactly 0                    | `{0} No items`                       |
-| `{1}`           | Exactly 1                    | `{1} One item`                       |
-| `{n}`           | Exactly n                    | `{5} Exactly five`                   |
-| `[2,*]`         | 2 and above                  | `[2,*] :count items`                 |
-| `[0,1]`         | 0 or 1                       | `[0,1] :count file`                  |
-| `[1,10]`        | Between 1 and 10 (inclusive) | `[1,10] a few items`                 |
+| Pattern | Matches | Example |
+| :--- | :--- | :--- |
+| `{0}` | Exactly 0 | `{0} No items` |
+| `{1}` | Exactly 1 | `{1} One item` |
+| `{n}` | Exactly n | `{5} Exactly five` |
+| `[2,*]` | 2 and above | `[2,*] :count items` |
+| `[0,1]` | 0 or 1 | `[0,1] :count file` |
+| `[1,10]` | Between 1 and 10 (inclusive) | `[1,10] a few items` |
 
 Forms are separated by `|`. The `:count` placeholder is automatically replaced by the count value.
 
@@ -158,7 +170,7 @@ Forms are separated by `|`. The `:count` placeholder is automatically replaced b
 ### Factory functions
 
 | Function | Description |
-| --- | --- |
+| :--- | :--- |
 | `createI18n(translations?, locale?)` | Creates a translator instance (alias, preferred). |
 | `createTranslator(translations?, locale?)` | Creates a translator instance (explicit name). |
 
@@ -166,25 +178,25 @@ Both return a `Translator` instance. Default locale is `'en'`.
 
 ### Translator methods
 
-| Method                                  | Description                                             |
-| --------------------------------------- | ------------------------------------------------------- |
-| `__(path, replacements?)`               | Translate a key with optional replacements.             |
-| `__(path, count, replacements?)`        | Translate with pluralization count.                     |
-| `translate(path, replacements?)`        | Alias for `__`.                                         |
-| `translate(path, count, replacements?)` | Alias for `__` with count.                              |
-| `setLocale(locale)`                     | Set the active locale.                                  |
-| `getLocale()`                           | Get the active locale.                                  |
-| `setTranslations(locale, translations)` | Replace all translations for a locale.                  |
-| `addTranslations(locale, translations)` | Merge translations into an existing locale.             |
-| `hasTranslation(path, locale?)`         | Check if a translation key exists (uses active locale). |
-| `getAvailableLocales()`                 | Return all registered locale codes.                     |
+| Method | Description |
+| :--- | :--- |
+| `__(path, replacements?)` | Translate a key with optional replacements. |
+| `__(path, count, replacements?)` | Translate with pluralization count. |
+| `translate(path, replacements?)` | Alias for `__`. |
+| `translate(path, count, replacements?)` | Alias for `__` with count. |
+| `setLocale(locale)` | Set the active locale. |
+| `getLocale()` | Get the active locale. |
+| `setTranslations(locale, translations)` | Replace all translations for a locale. |
+| `addTranslations(locale, translations)` | Merge translations into an existing locale. |
+| `hasTranslation(path, locale?)` | Check if a translation key exists (uses active locale). |
+| `getAvailableLocales()` | Return all registered locale codes. |
 
 ### Pluralization utilities
 
-| Function                           | Description                                     |
-| ---------------------------------- | ----------------------------------------------- |
+| Function | Description |
+| :--- | :--- |
 | `applyPluralization(value, count)` | Apply pluralization to a raw string with count. |
-| `selectPluralForm(forms, count)`   | Select the correct form from a pre-split array. |
+| `selectPluralForm(forms, count)` | Select the correct form from a pre-split array. |
 
 ---
 
@@ -238,6 +250,10 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for the full development workflow.
 [eslint]: https://eslint.org
 [prettier-badge]: https://img.shields.io/badge/formatter-prettier-F7B93E.svg?logo=prettier
 [prettier]: https://prettier.io
+[vitest-badge]: https://img.shields.io/badge/test-vitest-6E9F18.svg?logo=vitest
+[vitest]: https://vitest.dev
+[knip-badge]: https://img.shields.io/badge/dead%20code-knip-EC4899.svg
+[knip]: https://knip.dev
 [ecosystem]: https://gitlab.com/zairakai
 [docs]: https://js-i18n-8f9736.gitlab.io
 [docs-badge]: https://img.shields.io/badge/docs-online-blue

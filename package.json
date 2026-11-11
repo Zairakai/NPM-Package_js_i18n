@@ -1,7 +1,7 @@
 {
   "name": "@zairakai/js-i18n",
   "version": "0.0.0",
-  "description": "Lightweight internationalization library with Laravel-style translation, pluralization, dot-notation keys, and multi-locale support",
+  "description": "Internationalization library for the web with Laravel-style translation, pluralization, dot-notation keys and multi-locale support, validated at runtime with zod",
   "keywords": [
     "i18n",
     "internationalization",

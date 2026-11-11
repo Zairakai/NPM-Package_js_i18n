@@ -1,6 +1,6 @@
 /**
  * @zairakai/npm-i18n
- * Lightweight internationalization library with Laravel-style features
+ * Internationalization library with Laravel-style features
  */
 
 export { applyPluralization, selectPluralForm } from './pluralization.js'
