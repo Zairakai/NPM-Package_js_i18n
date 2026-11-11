@@ -12,7 +12,7 @@ describe('translator', () => {
           },
         },
       },
-      'en'
+      'en',
     )
 
     expect(t.__('greeting', { name: 'Ada' })).toBe('Hello Ada')

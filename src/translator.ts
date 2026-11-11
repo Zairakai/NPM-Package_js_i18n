@@ -37,7 +37,7 @@ export const createTranslator = (translations: TranslationData = {}, locale = 'e
   const translate: TranslateFunction = (
     path: string,
     countOrReplacements: number | ReplacementParameters = {},
-    replacements: ReplacementParameters = {}
+    replacements: ReplacementParameters = {},
   ): string => {
     CountOrReplacementsSchema.parse(countOrReplacements)
     ReplacementParametersSchema.parse(replacements)
@@ -46,7 +46,7 @@ export const createTranslator = (translations: TranslationData = {}, locale = 'e
     let actualReplacements = replacements
 
     // Handle parameter overloading
-    if ('number' === typeof countOrReplacements) {
+    if (typeof countOrReplacements === 'number') {
       count = countOrReplacements
       // Automatically add count to replacements
       actualReplacements = { count: countOrReplacements, ...replacements }
@@ -66,7 +66,7 @@ export const createTranslator = (translations: TranslationData = {}, locale = 'e
     for (const segment of segments) {
       if (
         translation &&
-        'object' === typeof translation &&
+        typeof translation === 'object' &&
         Object.prototype.hasOwnProperty.call(translation, segment)
       ) {
         translation = translation[segment]
@@ -75,7 +75,7 @@ export const createTranslator = (translations: TranslationData = {}, locale = 'e
       }
     }
 
-    if ('string' === typeof translation) {
+    if (typeof translation === 'string') {
       // Apply pluralization if count provided
       const pluralizedTranslation = applyPluralization(translation, count)
 
@@ -150,7 +150,7 @@ export const createTranslator = (translations: TranslationData = {}, locale = 'e
 
     // Navigate through the path
     for (const segment of segments) {
-      if (current && 'object' === typeof current && segment in current) {
+      if (current && typeof current === 'object' && segment in current) {
         current = current[segment] as Record<string, unknown> | string
       } else {
         return false
@@ -158,7 +158,7 @@ export const createTranslator = (translations: TranslationData = {}, locale = 'e
     }
 
     // Check if final value is a string
-    return 'string' === typeof current
+    return typeof current === 'string'
   }
 
   /**

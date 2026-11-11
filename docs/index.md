@@ -2,7 +2,7 @@
 layout: home
 hero:
   name: "@zairakai/js-i18n"
-  tagline: Lightweight internationalization with Laravel-style translations, replacements and pluralization.
+  tagline: Internationalization with Laravel-style translations, replacements and pluralization, validated at runtime.
   actions:
     - theme: brand
       text: Get started

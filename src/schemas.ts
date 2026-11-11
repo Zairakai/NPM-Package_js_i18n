@@ -9,7 +9,7 @@ import type { ReplacementParameters, TranslationData, TranslationObject } from '
  * Recursive schema for a translation value (string or nested TranslationObject)
  */
 const TranslationValueSchema: z.ZodType<string | TranslationObject> = z.lazy(() =>
-  z.union([z.string(), z.record(z.string(), TranslationValueSchema)])
+  z.union([z.string(), z.record(z.string(), TranslationValueSchema)]),
 ) as z.ZodType<string | TranslationObject>
 
 /**
@@ -17,7 +17,7 @@ const TranslationValueSchema: z.ZodType<string | TranslationObject> = z.lazy(() 
  */
 export const TranslationObjectSchema: z.ZodType<TranslationObject> = z.record(
   z.string(),
-  TranslationValueSchema
+  TranslationValueSchema,
 ) as z.ZodType<TranslationObject>
 
 /**
@@ -30,7 +30,7 @@ export const TranslationDataSchema: z.ZodType<TranslationData> = z.record(z.stri
  */
 export const ReplacementParametersSchema: z.ZodType<ReplacementParameters> = z.record(
   z.string(),
-  z.union([z.string(), z.number()])
+  z.union([z.string(), z.number()]),
 )
 
 /**
