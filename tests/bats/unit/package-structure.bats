@@ -34,12 +34,24 @@ teardown() {
     assert_file_exists "${PROJECT_ROOT}/tsconfig.json"
 }
 
-@test "tsup.config.js exists" {
-    assert_file_exists "${PROJECT_ROOT}/tsup.config.js"
+@test ".gitattributes exists" {
+    assert_file_exists "${PROJECT_ROOT}/.gitattributes"
 }
 
-@test "vitest.config.js exists" {
-    assert_file_exists "${PROJECT_ROOT}/vitest.config.js"
+@test ".npmrc exists" {
+    assert_file_exists "${PROJECT_ROOT}/.npmrc"
+}
+
+@test "LICENSE exists" {
+    assert_file_exists "${PROJECT_ROOT}/LICENSE"
+}
+
+@test "the root files for the editors exist" {
+    assert_file_exists "${PROJECT_ROOT}/eslint.config.mjs"
+    assert_file_exists "${PROJECT_ROOT}/prettier.config.mjs"
+    assert_file_exists "${PROJECT_ROOT}/stylelint.config.mjs"
+    assert_file_exists "${PROJECT_ROOT}/vitest.config.mjs"
+    assert_file_exists "${PROJECT_ROOT}/.markdownlint.json"
 }
 
 # ============================================================================
@@ -52,6 +64,14 @@ teardown() {
 
 @test "config/dev-tools/knip.config.js exists" {
     assert_file_exists "${PROJECT_ROOT}/config/dev-tools/knip.config.js"
+}
+
+@test "config/dev-tools/tsup.config.js exists" {
+    assert_file_exists "${PROJECT_ROOT}/config/dev-tools/tsup.config.js"
+}
+
+@test "config/dev-tools/vitest.config.js exists" {
+    assert_file_exists "${PROJECT_ROOT}/config/dev-tools/vitest.config.js"
 }
 
 # ============================================================================

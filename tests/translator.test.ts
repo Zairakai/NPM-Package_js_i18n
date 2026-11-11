@@ -50,7 +50,7 @@ describe('createTranslator', () => {
           },
         },
       },
-      'en'
+      'en',
     )
   })
 
@@ -81,7 +81,7 @@ describe('createTranslator', () => {
 
     it('should replace multiple parameters', () => {
       expect(translator.translate('nested.with_params', { name: 'John', count: 5 })).toBe(
-        'Hello John, you have 5 messages'
+        'Hello John, you have 5 messages',
       )
     })
 

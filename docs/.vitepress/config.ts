@@ -27,7 +27,7 @@ const project = 'https://gitlab.com/zairakai/npm-packages/js-i18n'
 export default defineConfig({
   title: '@zairakai/js-i18n',
   description:
-    'Lightweight internationalization with Laravel-style features: translations, replacements and pluralization.',
+    'Internationalization with Laravel-style features: translations, replacements and pluralization, validated at runtime with zod.',
   base: process.env.DOCS_BASE ?? '/',
   cleanUrls: true,
   lastUpdated: true,

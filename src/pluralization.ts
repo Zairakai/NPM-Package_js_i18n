@@ -34,8 +34,8 @@ export const selectPluralForm = (message: string, count: number): string => {
       }
     } else if (rangeMatch) {
       // Range match [1,5] or [20,*]
-      const min = '*' === rangeMatch[1] ? -Infinity : parseInt(rangeMatch[1], 10)
-      const max = '*' === rangeMatch[2] ? Infinity : parseInt(rangeMatch[2], 10)
+      const min = rangeMatch[1] === '*' ? -Infinity : parseInt(rangeMatch[1], 10)
+      const max = rangeMatch[2] === '*' ? Infinity : parseInt(rangeMatch[2], 10)
 
       if (count >= min && count <= max) {
         return rangeMatch[3].trim()
@@ -50,10 +50,10 @@ export const selectPluralForm = (message: string, count: number): string => {
     return !trimmed.match(/^[{\[]/) // No special condition markers
   })
 
-  if (2 <= simpleParts.length) {
+  if (simpleParts.length >= 2) {
     // English pluralization: only 1 = singular, others (including 0) = plural
-    return 1 === count ? simpleParts[0].trim() : simpleParts[1].trim()
-  } else if (1 === simpleParts.length) {
+    return count === 1 ? simpleParts[0].trim() : simpleParts[1].trim()
+  } else if (simpleParts.length === 1) {
     return simpleParts[0].trim()
   }
 
@@ -80,7 +80,7 @@ export const selectPluralForm = (message: string, count: number): string => {
  * @returns Pluralized translation
  */
 export const applyPluralization = (translation: string, count: number | null): string => {
-  if ('string' === typeof translation && translation.includes('|') && null !== count) {
+  if (typeof translation === 'string' && translation.includes('|') && count !== null) {
     return selectPluralForm(translation, count)
   }
   return translation
