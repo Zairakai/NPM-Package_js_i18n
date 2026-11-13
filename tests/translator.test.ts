@@ -69,24 +69,30 @@ describe('createTranslator', () => {
     })
 
     it('should return key if nested path not found', () => {
-      expect(translator.translate('nested.nonexistent')).toBe('nested.nonexistent')
+      expect(translator.translate('nested.nonexistent')).toBe(
+        'nested.nonexistent',
+      )
       expect(translator.translate('nonexistent.path')).toBe('nonexistent.path')
     })
   })
 
   describe('parameter replacement', () => {
     it('should replace simple parameters', () => {
-      expect(translator.translate('welcome', { name: 'John' })).toBe('Welcome, John!')
-    })
-
-    it('should replace multiple parameters', () => {
-      expect(translator.translate('nested.with_params', { name: 'John', count: 5 })).toBe(
-        'Hello John, you have 5 messages',
+      expect(translator.translate('welcome', { name: 'John' })).toBe(
+        'Welcome, John!',
       )
     })
 
+    it('should replace multiple parameters', () => {
+      expect(
+        translator.translate('nested.with_params', { name: 'John', count: 5 }),
+      ).toBe('Hello John, you have 5 messages')
+    })
+
     it('should leave unreplaced parameters as is', () => {
-      expect(translator.translate('welcome', { age: 25 })).toBe('Welcome, :name!')
+      expect(translator.translate('welcome', { age: 25 })).toBe(
+        'Welcome, :name!',
+      )
     })
 
     it('should handle empty replacement object', () => {
@@ -109,18 +115,24 @@ describe('createTranslator', () => {
     })
 
     it('should combine pluralization with replacements', () => {
-      const result = translator.translate('pluralization.item', 3, { extra: 'test' })
+      const result = translator.translate('pluralization.item', 3, {
+        extra: 'test',
+      })
       expect(result).toBe('3 items')
     })
   })
 
   describe('parameter overloading', () => {
     it('should handle replacements as first parameter', () => {
-      expect(translator.translate('welcome', { name: 'Jane' })).toBe('Welcome, Jane!')
+      expect(translator.translate('welcome', { name: 'Jane' })).toBe(
+        'Welcome, Jane!',
+      )
     })
 
     it('should handle count and replacements', () => {
-      expect(translator.translate('pluralization.item', 2, { extra: 'value' })).toBe('2 items')
+      expect(
+        translator.translate('pluralization.item', 2, { extra: 'value' }),
+      ).toBe('2 items')
     })
 
     it('should handle count as first parameter for pluralization', () => {
@@ -160,7 +172,9 @@ describe('createTranslator', () => {
 
       translator.setLocale('es')
       expect(translator.translate('hello')).toBe('Hola')
-      expect(translator.translate('welcome', { name: 'Juan' })).toBe('¡Bienvenido, Juan!')
+      expect(translator.translate('welcome', { name: 'Juan' })).toBe(
+        '¡Bienvenido, Juan!',
+      )
     })
 
     it('should add translations to existing locale', () => {
@@ -172,7 +186,9 @@ describe('createTranslator', () => {
       })
 
       expect(translator.translate('new_key')).toBe('New translation')
-      expect(translator.translate('nested.new_nested')).toBe('New nested translation')
+      expect(translator.translate('nested.new_nested')).toBe(
+        'New nested translation',
+      )
       // Should preserve existing translations
       expect(translator.translate('hello')).toBe('Hello')
     })
@@ -223,8 +239,12 @@ describe('createTranslator', () => {
         },
       })
 
-      expect(translator.hasTranslation('level1.level2.level3', 'test')).toBe(true)
-      expect(translator.hasTranslation('level1.level2.level4', 'test')).toBe(false)
+      expect(translator.hasTranslation('level1.level2.level3', 'test')).toBe(
+        true,
+      )
+      expect(translator.hasTranslation('level1.level2.level4', 'test')).toBe(
+        false,
+      )
       expect(translator.hasTranslation('level1.level3', 'test')).toBe(false)
     })
   })
@@ -261,8 +281,10 @@ describe('createTranslator', () => {
         ...testTranslations.en,
         curly: 'Hello {name}, you have {count} items',
       })
-      // Only provide `name` — `{count}` must remain unchanged
-      expect(translator.translate('curly', { name: 'Alice' })).toBe('Hello Alice, you have {count} items')
+      // Only provide `name` - `{count}` must remain unchanged
+      expect(translator.translate('curly', { name: 'Alice' })).toBe(
+        'Hello Alice, you have {count} items',
+      )
     })
   })
 })

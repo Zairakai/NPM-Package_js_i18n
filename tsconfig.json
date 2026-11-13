@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "extends": "@zairakai/js-dev-tools/config/tsconfig.base.json",
+  "extends": "@zairakai/js-dev-tools/tsconfig",
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "src"

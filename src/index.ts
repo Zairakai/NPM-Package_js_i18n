@@ -22,6 +22,9 @@ import type { TranslationData, Translator } from './types.js'
  * @param locale - Default locale
  * @returns Translator instance with __ function
  */
-export const createI18n = (translations: TranslationData = {}, locale = 'en'): Translator => {
+export const createI18n = (
+  translations: TranslationData = {},
+  locale = 'en',
+): Translator => {
   return createTranslator(translations, locale)
 }

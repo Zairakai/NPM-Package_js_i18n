@@ -14,6 +14,18 @@
  * @param count - Count to determine plural form
  * @returns Selected plural form
  */
+/**
+ * Group of a regular expression match. The groups of the patterns used here
+ * always take part in the match: the empty string is only for the type.
+ */
+const group = (match: RegExpMatchArray, index: number): string =>
+  match[index] ?? ''
+
+/**
+ * Trimmed text of a part, empty when there is none
+ */
+const first = (part: string | undefined): string => part?.trim() ?? ''
+
 export const selectPluralForm = (message: string, count: number): string => {
   const parts = message.split('|')
 
@@ -24,21 +36,25 @@ export const selectPluralForm = (message: string, count: number): string => {
     // Look for exact match conditions {n}
     const exactMatch = trimmedPart.match(/^{\s*(\d+)\s*}\s*(.*)$/)
     // Look for range conditions [n,m]
-    const rangeMatch = trimmedPart.match(/^\[\s*(\d+|\*)\s*,\s*(\d+|\*)\s*\]\s*(.*)$/)
+    const rangeMatch = trimmedPart.match(
+      /^\[\s*(\d+|\*)\s*,\s*(\d+|\*)\s*\]\s*(.*)$/,
+    )
 
     if (exactMatch) {
       // Exact number match {5}
-      const exactNumber = parseInt(exactMatch[1], 10)
+      const exactNumber = parseInt(group(exactMatch, 1), 10)
       if (count === exactNumber) {
-        return exactMatch[2].trim()
+        return group(exactMatch, 2).trim()
       }
     } else if (rangeMatch) {
       // Range match [1,5] or [20,*]
-      const min = rangeMatch[1] === '*' ? -Infinity : parseInt(rangeMatch[1], 10)
-      const max = rangeMatch[2] === '*' ? Infinity : parseInt(rangeMatch[2], 10)
+      const min =
+        rangeMatch[1] === '*' ? -Infinity : parseInt(group(rangeMatch, 1), 10)
+      const max =
+        rangeMatch[2] === '*' ? Infinity : parseInt(group(rangeMatch, 2), 10)
 
       if (count >= min && count <= max) {
-        return rangeMatch[3].trim()
+        return group(rangeMatch, 3).trim()
       }
     }
   }
@@ -52,22 +68,24 @@ export const selectPluralForm = (message: string, count: number): string => {
 
   if (simpleParts.length >= 2) {
     // English pluralization: only 1 = singular, others (including 0) = plural
-    return count === 1 ? simpleParts[0].trim() : simpleParts[1].trim()
+    return first(simpleParts[count === 1 ? 0 : 1])
   } else if (simpleParts.length === 1) {
-    return simpleParts[0].trim()
+    return first(simpleParts[0])
   }
 
   // Last resort: return first part, extracting content from patterns
-  const firstPart = parts[0].trim()
+  const firstPart = first(parts[0])
 
   // Try to extract content from patterns
   const exactMatch = firstPart.match(/^{\s*(\d+)\s*}\s*(.*)$/)
-  const rangeMatch = firstPart.match(/^\[\s*(\d+|\*)\s*,\s*(\d+|\*)\s*\]\s*(.*)$/)
+  const rangeMatch = firstPart.match(
+    /^\[\s*(\d+|\*)\s*,\s*(\d+|\*)\s*\]\s*(.*)$/,
+  )
 
   if (exactMatch) {
-    return exactMatch[2].trim()
+    return group(exactMatch, 2).trim()
   } else if (rangeMatch) {
-    return rangeMatch[3].trim()
+    return group(rangeMatch, 3).trim()
   }
 
   return firstPart
@@ -79,8 +97,15 @@ export const selectPluralForm = (message: string, count: number): string => {
  * @param count - Count for pluralization
  * @returns Pluralized translation
  */
-export const applyPluralization = (translation: string, count: number | null): string => {
-  if (typeof translation === 'string' && translation.includes('|') && count !== null) {
+export const applyPluralization = (
+  translation: string,
+  count: number | null,
+): string => {
+  if (
+    typeof translation === 'string' &&
+    translation.includes('|') &&
+    count !== null
+  ) {
     return selectPluralForm(translation, count)
   }
   return translation

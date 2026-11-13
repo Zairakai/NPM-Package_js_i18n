@@ -12,7 +12,10 @@ import {
 
 describe('TranslationObjectSchema', () => {
   it('validates flat string values', () => {
-    const result = TranslationObjectSchema.safeParse({ hello: 'world', goodbye: 'bye' })
+    const result = TranslationObjectSchema.safeParse({
+      hello: 'world',
+      goodbye: 'bye',
+    })
     expect(result.success).toBe(true)
   })
 
@@ -89,7 +92,10 @@ describe('ReplacementParametersSchema', () => {
   })
 
   it('validates mixed string and number', () => {
-    const result = ReplacementParametersSchema.safeParse({ name: 'Bob', count: 3 })
+    const result = ReplacementParametersSchema.safeParse({
+      name: 'Bob',
+      count: 3,
+    })
     expect(result.success).toBe(true)
   })
 
@@ -110,15 +116,17 @@ describe('ReplacementParametersSchema', () => {
 })
 
 describe('CountOrReplacementsSchema', () => {
-  it('accepts a number (case 1 — count for pluralization)', () => {
+  it('accepts a number (case 1 - count for pluralization)', () => {
     expect(CountOrReplacementsSchema.safeParse(3).success).toBe(true)
   })
 
-  it('accepts a replacements object (case 2 — named replacements)', () => {
-    expect(CountOrReplacementsSchema.safeParse({ name: 'Alice', count: 2 }).success).toBe(true)
+  it('accepts a replacements object (case 2 - named replacements)', () => {
+    expect(
+      CountOrReplacementsSchema.safeParse({ name: 'Alice', count: 2 }).success,
+    ).toBe(true)
   })
 
-  it('accepts an empty object (case 2 — no replacements)', () => {
+  it('accepts an empty object (case 2 - no replacements)', () => {
     expect(CountOrReplacementsSchema.safeParse({}).success).toBe(true)
   })
 
@@ -127,7 +135,9 @@ describe('CountOrReplacementsSchema', () => {
   })
 
   it('rejects an object with invalid value types', () => {
-    expect(CountOrReplacementsSchema.safeParse({ name: [1, 2] }).success).toBe(false)
+    expect(CountOrReplacementsSchema.safeParse({ name: [1, 2] }).success).toBe(
+      false,
+    )
   })
 })
 
@@ -146,7 +156,9 @@ describe('translate() Zod validation (case 1+2+3)', () => {
 
   it('accepts case 1: (path, count)', async () => {
     const { createTranslator } = await import('../src/translator.js')
-    const t = createTranslator({ en: { items: '{0} item|{1} item|[2,*] :count items' } })
+    const t = createTranslator({
+      en: { items: '{0} item|{1} item|[2,*] :count items' },
+    })
     expect(() => t.translate('items', 3)).not.toThrow()
   })
 
@@ -158,7 +170,9 @@ describe('translate() Zod validation (case 1+2+3)', () => {
 
   it('accepts case 3: (path, count, replacements)', async () => {
     const { createTranslator } = await import('../src/translator.js')
-    const t = createTranslator({ en: { items: '[2,*] :count items for :name' } })
+    const t = createTranslator({
+      en: { items: '[2,*] :count items for :name' },
+    })
     expect(() => t.translate('items', 5, { name: 'Alice' })).not.toThrow()
   })
 })
