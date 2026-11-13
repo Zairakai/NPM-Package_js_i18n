@@ -41,13 +41,6 @@ GEMINI.md
 .codex/
 .gemini/
 
-# Editor and IDE files of the project
-# ----------------
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-
 # Dependencies
 # ----------------
 /node_modules

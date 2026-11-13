@@ -115,14 +115,14 @@ describe('selectPluralForm', () => {
       expect(selectPluralForm(message, 10)).toBe('Special case')
     })
 
-    it('should return first part if no match found — exact condition fallback', () => {
+    it('should return first part if no match found - exact condition fallback', () => {
       const message = '{10} Ten only|{20} Twenty only'
 
       expect(selectPluralForm(message, 5)).toBe('Ten only')
       expect(selectPluralForm(message, 15)).toBe('Ten only')
     })
 
-    it('should return first part if no match found — range condition fallback', () => {
+    it('should return first part if no match found - range condition fallback', () => {
       // All parts are ranges, none match count=99, first part is a range → rangeMatch fallback
       const message = '[1,5] Few|[6,10] Several'
 
@@ -192,11 +192,36 @@ describe('applyPluralization', () => {
   })
 
   it('should work with complex pluralization rules', () => {
-    const translation = '[1,1] :count minute|[2,59] :count minutes|[60,*] :count hour(s)'
+    const translation =
+      '[1,1] :count minute|[2,59] :count minutes|[60,*] :count hour(s)'
 
     expect(applyPluralization(translation, 1)).toBe(':count minute')
     expect(applyPluralization(translation, 30)).toBe(':count minutes')
     expect(applyPluralization(translation, 60)).toBe(':count hour(s)')
     expect(applyPluralization(translation, 120)).toBe(':count hour(s)')
+  })
+})
+
+describe('selectPluralForm when no part fits the count', () => {
+  it('returns the content of the first exact condition', () => {
+    expect(selectPluralForm('{0} none | {5} five', 3)).toBe('none')
+  })
+
+  it('returns the content of the first range condition', () => {
+    expect(selectPluralForm('[1,2] few | [5,6] some', 9)).toBe('few')
+  })
+
+  it('returns the first part as it is when its condition is not a number', () => {
+    expect(selectPluralForm('{x} a | {y} b', 3)).toBe('{x} a')
+  })
+
+  it('returns an empty string for an empty translation', () => {
+    expect(selectPluralForm('', 1)).toBe('')
+  })
+
+  it('picks the singular and the plural of a simple translation', () => {
+    expect(selectPluralForm('apple | apples', 1)).toBe('apple')
+    expect(selectPluralForm('apple | apples', 0)).toBe('apples')
+    expect(selectPluralForm('apple', 4)).toBe('apple')
   })
 })

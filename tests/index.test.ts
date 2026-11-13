@@ -40,7 +40,9 @@ describe('main exports', () => {
     })
 
     expect(translator.translate('test')).toBe('Test message')
-    expect(translator.translate('with_param', { name: 'World' })).toBe('Hello World')
+    expect(translator.translate('with_param', { name: 'World' })).toBe(
+      'Hello World',
+    )
   })
 
   it('should create working translator via createI18n shorthand', async () => {
