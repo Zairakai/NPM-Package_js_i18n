@@ -257,3 +257,12 @@ teardown() {
     assert_file_contains "${PROJECT_ROOT}/README.md" "<summary>${title}"
   done
 }
+
+@test "no table of the Markdown files has lost the start of its separator line" {
+  cd "${PROJECT_ROOT}"
+
+  run git grep -nE -e '^--- \|' -- '*.md'
+
+  [ "$status" -eq 1 ]
+  [ -z "$output" ]
+}

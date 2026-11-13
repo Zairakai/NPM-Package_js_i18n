@@ -47,13 +47,6 @@
 | `make test-coverage` | Vitest | Run the unit tests with the coverage report (`coverage/`): 75 % at least, as the base requires. |
 | `make bats` | BATS | Run shell script integration tests. |
 
---- | :--- | :--- |
-| `make quality` | All | Full quality gate (lint, format, typecheck, tests). |
-| `make eslint` | ESLint | JavaScript/TypeScript linting. |
-| `make prettier` | Prettier | Code formatting check. |
-| `make test` | Vitest | Run unit tests with coverage. |
-| `make markdownlint` | Markdownlint | Validate Markdown documentation. |
-
 ---
 
 [handbook-contributing]: https://gitlab.com/zairakai/handbook/-/blob/main/CONTRIBUTING.md
