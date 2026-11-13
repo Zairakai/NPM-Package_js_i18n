@@ -23,7 +23,10 @@ import type {
  * @param locale - Current locale
  * @returns Translator instance
  */
-export const createTranslator = (translations: TranslationData = {}, locale = 'en'): Translator => {
+export const createTranslator = (
+  translations: TranslationData = {},
+  locale = 'en',
+): Translator => {
   const currentTranslations = TranslationDataSchema.parse(translations)
   let currentLocale = locale
 
@@ -61,7 +64,8 @@ export const createTranslator = (translations: TranslationData = {}, locale = 'e
 
     // Navigate through translation object using dot notation
     const segments = path.split('.')
-    let translation: string | TranslationObject = currentTranslations[currentLocale]
+    let translation: string | TranslationObject | undefined =
+      currentTranslations[currentLocale]
 
     for (const segment of segments) {
       if (
@@ -82,10 +86,14 @@ export const createTranslator = (translations: TranslationData = {}, locale = 'e
       // Replace placeholders (:key and {key} formats)
       const result = pluralizedTranslation
         .replace(/:(\w+)/g, (match, key) => {
-          return Object.prototype.hasOwnProperty.call(actualReplacements, key) ? String(actualReplacements[key]) : match
+          return Object.prototype.hasOwnProperty.call(actualReplacements, key)
+            ? String(actualReplacements[key])
+            : match
         })
         .replace(/{(\w+)}/g, (match, key) => {
-          return Object.prototype.hasOwnProperty.call(actualReplacements, key) ? String(actualReplacements[key]) : match
+          return Object.prototype.hasOwnProperty.call(actualReplacements, key)
+            ? String(actualReplacements[key])
+            : match
         })
 
       return result
@@ -114,7 +122,10 @@ export const createTranslator = (translations: TranslationData = {}, locale = 'e
    * @param locale - Locale code
    * @param translations - Translation object
    */
-  const setTranslations = (locale: string, translations: TranslationObject): void => {
+  const setTranslations = (
+    locale: string,
+    translations: TranslationObject,
+  ): void => {
     currentTranslations[locale] = TranslationObjectSchema.parse(translations)
   }
 
@@ -123,12 +134,16 @@ export const createTranslator = (translations: TranslationData = {}, locale = 'e
    * @param locale - Locale code
    * @param translations - Translation object to merge
    */
-  const addTranslations = (locale: string, translations: TranslationObject): void => {
+  const addTranslations = (
+    locale: string,
+    translations: TranslationObject,
+  ): void => {
     const validated = TranslationObjectSchema.parse(translations)
-    if (!currentTranslations[locale]) {
-      currentTranslations[locale] = {}
+    currentTranslations[locale] ??= {}
+    currentTranslations[locale] = {
+      ...currentTranslations[locale],
+      ...validated,
     }
-    currentTranslations[locale] = { ...currentTranslations[locale], ...validated }
   }
 
   /**
@@ -137,7 +152,10 @@ export const createTranslator = (translations: TranslationData = {}, locale = 'e
    * @param locale - Locale to check (optional, uses current if not provided)
    * @returns True if key exists
    */
-  const hasTranslation = (path: string, locale: string | null = null): boolean => {
+  const hasTranslation = (
+    path: string,
+    locale: string | null = null,
+  ): boolean => {
     const checkLocale = locale ?? currentLocale
 
     // Check if locale exists
@@ -146,7 +164,8 @@ export const createTranslator = (translations: TranslationData = {}, locale = 'e
     }
 
     const segments = path.split('.')
-    let current: Record<string, unknown> | string = currentTranslations[checkLocale]
+    let current: Record<string, unknown> | string =
+      currentTranslations[checkLocale]
 
     // Navigate through the path
     for (const segment of segments) {
