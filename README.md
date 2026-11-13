@@ -1,8 +1,8 @@
+<p align="center">
+  <img src="https://gitlab.com/zairakai/npm-packages/js-i18n/-/raw/main/assets/icon.png" alt="JS i18n" width="160">
+</p>
+
 # JS i18n
-
-![JS i18n](https://gitlab.com/zairakai/npm-packages/js-i18n/-/raw/main/assets/banner.png)
-
-`@zairakai/js-i18n`
 
 [![Main][pipeline-main-badge]][pipeline-main-link]
 [![Develop][pipeline-develop-badge]][pipeline-develop-link]
@@ -27,11 +27,11 @@ Internationalization library for the web with Laravel-style translation, plurali
 
 ## Features
 
-- **Laravel-style `__()`** — familiar `:attribute` replacement and `{0} | {1} | [2,*] :count` pluralization
-- **Dot notation keys** — navigate nested translation objects with `auth.login.title`
-- **Multi-locale** — manage any number of locales, switch at runtime
-- **Runtime validation** — translation data validated at runtime, invalid structures throw with a descriptive error message
-- **Type-safe** — full TypeScript types for IDE support and static analysis
+- **Laravel-style `__()`** - familiar `:attribute` replacement and `{0} | {1} | [2,*] :count` pluralization
+- **Dot notation keys** - navigate nested translation objects with `auth.login.title`
+- **Multi-locale** - manage any number of locales, switch at runtime
+- **Runtime validation** - translation data validated at runtime, invalid structures throw with a descriptive error message
+- **Type-safe** - full TypeScript types for IDE support and static analysis
 
 ---
 
@@ -86,7 +86,8 @@ i18n.__('welcome', { name: 'Stan' }) // "Welcome, Stan!"
 i18n.__('auth.login')               // "Sign in"
 ```
 
-### Pluralization
+<details>
+<summary>Pluralization: singular, plural and ranges</summary>
 
 ```typescript
 import { createI18n } from '@zairakai/js-i18n'
@@ -103,13 +104,19 @@ i18n.__('apples', 1) // "One apple"
 i18n.__('apples', 5) // "5 apples"
 ```
 
-### Count + replacements (case 3)
+</details>
+
+<details>
+<summary>Count and replacements together</summary>
 
 ```typescript
 i18n.__('files', 3, { extra: 'info' }) // "3 files"
 ```
 
-### Managing locales at runtime
+</details>
+
+<details>
+<summary>Managing locales at runtime</summary>
 
 ```typescript
 i18n.setLocale('fr')
@@ -123,7 +130,10 @@ i18n.hasTranslation('auth.login', 'de') // true
 i18n.hasTranslation('auth.logout', 'de') // false
 ```
 
-### Error handling
+</details>
+
+<details>
+<summary>Error handling: what throws and when</summary>
 
 Translation data is validated at runtime. Invalid structures (e.g. loading from an API or external JSON) throw an `Error` with a descriptive message indicating exactly what is wrong.
 
@@ -141,9 +151,10 @@ try {
 
 The same applies to `setTranslations()`, `addTranslations()`, and `translate()` when replacements are malformed.
 
----
+</details>
 
-## Pluralization syntax
+<details>
+<summary>Pluralization syntax: the forms a translation can take</summary>
 
 The pluralization format follows Laravel's `trans_choice` pattern exactly.
 
@@ -163,40 +174,7 @@ Forms are separated by `|`. The `:count` placeholder is automatically replaced b
 '{0} No apples|{1} One apple|[2,*] :count apples'
 ```
 
----
-
-## API Reference
-
-### Factory functions
-
-| Function | Description |
-| :--- | :--- |
-| `createI18n(translations?, locale?)` | Creates a translator instance (alias, preferred). |
-| `createTranslator(translations?, locale?)` | Creates a translator instance (explicit name). |
-
-Both return a `Translator` instance. Default locale is `'en'`.
-
-### Translator methods
-
-| Method | Description |
-| :--- | :--- |
-| `__(path, replacements?)` | Translate a key with optional replacements. |
-| `__(path, count, replacements?)` | Translate with pluralization count. |
-| `translate(path, replacements?)` | Alias for `__`. |
-| `translate(path, count, replacements?)` | Alias for `__` with count. |
-| `setLocale(locale)` | Set the active locale. |
-| `getLocale()` | Get the active locale. |
-| `setTranslations(locale, translations)` | Replace all translations for a locale. |
-| `addTranslations(locale, translations)` | Merge translations into an existing locale. |
-| `hasTranslation(path, locale?)` | Check if a translation key exists (uses active locale). |
-| `getAvailableLocales()` | Return all registered locale codes. |
-
-### Pluralization utilities
-
-| Function | Description |
-| :--- | :--- |
-| `applyPluralization(value, count)` | Apply pluralization to a raw string with count. |
-| `selectPluralForm(forms, count)` | Select the correct form from a pre-split array. |
+</details>
 
 ---
 
@@ -242,7 +220,7 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for the full development workflow.
 [license]: ./LICENSE
 [security-badge]: https://img.shields.io/badge/security-scanned-green.svg
 [security]: ./SECURITY.md
-[issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fnpm-packages%2Fi18n?logo=gitlab&label=Issues
+[issues-badge]: https://img.shields.io/gitlab/issues/open-raw/zairakai%2Fnpm-packages%2Fjs-i18n?logo=gitlab&label=Issues
 [issues]: https://gitlab.com/zairakai/npm-packages/js-i18n/-/issues
 [node-badge]: https://img.shields.io/badge/node.js-%3E%3D24-green.svg?logo=node.js
 [node]: https://nodejs.org
